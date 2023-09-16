@@ -1,0 +1,4 @@
+name: rank
+version: '1.0'
+main: me.cole.rankplugin.Rank
+api-version: '1.20'
