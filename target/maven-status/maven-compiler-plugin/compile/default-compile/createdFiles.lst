@@ -1,3 +1,5 @@
 me\cole\rankplugin\Rank.class
+me\cole\rankplugin\commands\RankCommand.class
+me\cole\rankplugin\listeners\Listeners.class
 me\cole\rankplugin\database\Database.class
 me\cole\rankplugin\model\DatabaseStructure.class

@@ -2,3 +2,7 @@ name: rank
 version: '1.0'
 main: me.cole.rankplugin.Rank
 api-version: '1.20'
+commands:
+  rank:
+    usage: /rank <user> <set|display> <group>
+    description: Update or display a user group from the SQL database.

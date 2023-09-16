@@ -28,7 +28,7 @@ public class DatabaseStructure
     {
         return this.userGroup;
     }
-    public void setUserGroup(String userUUID)
+    public void setUserGroup(String userGroup)
     {
         this.userGroup = userGroup;
     }
@@ -37,7 +37,7 @@ public class DatabaseStructure
     {
         return this.perm;
     }
-    public void setPerm(String userUUID)
+    public void setPerm(int perm)
     {
         this.perm = perm;
     }

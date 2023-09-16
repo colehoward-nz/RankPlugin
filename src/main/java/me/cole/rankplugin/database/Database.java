@@ -1,6 +1,7 @@
 package me.cole.rankplugin.database;
 
 import me.cole.rankplugin.model.DatabaseStructure;
+import org.bukkit.entity.Player;
 
 import java.sql.*;
 
@@ -35,9 +36,22 @@ public class Database
         statement.close();
     }
 
+    public DatabaseStructure getUserStatistics(Player player) throws SQLException
+    {
+        DatabaseStructure userStatistics = searchUUID(player.getUniqueId().toString());
+
+        if (userStatistics == null)
+        {
+            userStatistics = new DatabaseStructure(player.getUniqueId().toString(), "User", 0);
+            createUserStatistics(userStatistics);
+        }
+
+        return userStatistics;
+    }
+
     public DatabaseStructure searchUUID(String userUUID) throws SQLException
     {
-        PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM rank_plugin WHERE userUUID = ?");
+        PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM player_statistics WHERE userUUID = ?");
         preparedStatement.setString(1, userUUID);
         ResultSet resultSet = preparedStatement.executeQuery();
         DatabaseStructure databaseStructure;
@@ -52,5 +66,43 @@ public class Database
 
         preparedStatement.close();
         return null;
+    }
+
+    public void createUserStatistics(DatabaseStructure databaseStructure) throws SQLException
+    {
+
+        PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO player_statistics(userUUID, userGroup, perm) VALUES (?, ?, ?)");
+        preparedStatement.setString(1, databaseStructure.getUserUUID());
+        preparedStatement.setString(2, databaseStructure.getUserGroup());
+        preparedStatement.setInt(3, databaseStructure.getPerm());
+
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+
+    }
+
+    public void updateUserStatistics(DatabaseStructure databaseStructure) throws SQLException
+    {
+
+        PreparedStatement preparedStatement = getConnection().prepareStatement("UPDATE player_statistics SET userUUID = ?, userGroup = ? WHERE perm = ?");
+        preparedStatement.setString(1, databaseStructure.getUserUUID());
+        preparedStatement.setString(2, databaseStructure.getUserGroup());
+        preparedStatement.setInt(3, databaseStructure.getPerm());
+
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+
+    }
+
+    public void deleteUserStatistics(DatabaseStructure databaseStructure) throws SQLException
+    {
+
+        PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM player_statistics WHERE userUUID = ?");
+        preparedStatement.setString(1, databaseStructure.getUserUUID());
+
+        preparedStatement.executeUpdate();
+
+        preparedStatement.close();
+
     }
 }
