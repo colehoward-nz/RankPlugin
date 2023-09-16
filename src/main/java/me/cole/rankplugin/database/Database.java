@@ -101,8 +101,6 @@ public class Database
         preparedStatement.setString(1, databaseStructure.getUserUUID());
 
         preparedStatement.executeUpdate();
-
         preparedStatement.close();
-
     }
 }

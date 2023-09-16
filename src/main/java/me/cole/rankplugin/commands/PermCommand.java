@@ -12,11 +12,11 @@ import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 
-public class RankCommand implements CommandExecutor
+public class PermCommand implements CommandExecutor
 {
     private final Database database;
 
-    public RankCommand(Database database) {
+    public PermCommand(Database database) {
         this.database = database;
     }
 
@@ -27,7 +27,7 @@ public class RankCommand implements CommandExecutor
         {
             if (arguments.length == 0 || arguments.length == 1)
             {
-                player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
+                player.sendMessage(ChatColor.RED + "Incorrect usage: /perm <user> <set|display> [0-9]");
             }
             else if (arguments.length == 2 || arguments.length == 3)
             {
@@ -39,9 +39,9 @@ public class RankCommand implements CommandExecutor
                     try
                     {
                         DatabaseStructure userStatistics = database.getUserStatistics(argumentUser);
-                        player.sendMessage(ChatColor.YELLOW + "User Group stored for " + argumentUser.getDisplayName());
+                        player.sendMessage(ChatColor.YELLOW + "User Perm stored for " + argumentUser.getDisplayName());
                         player.sendMessage(ChatColor.GREEN + "userUUID = " + ChatColor.WHITE + userStatistics.getUserUUID());
-                        player.sendMessage(ChatColor.GREEN + "userGroup = " + ChatColor.WHITE + userStatistics.getUserGroup());
+                        player.sendMessage(ChatColor.GREEN + "perm = " + ChatColor.WHITE + userStatistics.getPerm());
                     }
                     catch (SQLException exception)
                     {
@@ -54,15 +54,16 @@ public class RankCommand implements CommandExecutor
                 {
                     if (arguments.length == 3)
                     {
-                        String oldGroup = "";
-                        String newGroup = "";
+                        Integer oldPerm = 0;
+                        Integer newPerm = 0;
 
                         try
                         {
                             DatabaseStructure userStatistics = database.getUserStatistics(argumentUser);
-                            oldGroup = userStatistics.getUserGroup();
-                            userStatistics.setUserGroup(arguments[2]);
-                            newGroup = arguments[2];
+                            oldPerm = userStatistics.getPerm();
+                            player.sendMessage(arguments[2]);
+                            userStatistics.setPerm(Integer.parseInt(arguments[2]));
+                            newPerm = Integer.parseInt(arguments[2]);
                             database.updateUserStatistics(userStatistics);
                         }
                         catch (SQLException exception)
@@ -72,7 +73,7 @@ public class RankCommand implements CommandExecutor
                             player.sendMessage(ChatColor.RED + "Failed to retrieve UserStatistics");
                         }
 
-                        player.sendMessage(ChatColor.YELLOW + "User Group updated from " + oldGroup + " to " + newGroup + " for " + argumentUser.getDisplayName());
+                        player.sendMessage(ChatColor.YELLOW + "User Perm updated from " + oldPerm + " to " + newPerm + " for " + argumentUser.getDisplayName());
                     }
                     else
                     {
