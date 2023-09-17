@@ -44,7 +44,7 @@ public class Listeners implements Listener
         try
         {
             DatabaseStructure userStatistics = database.getUserStatistics(p);
-            event.setQuitMessage(ChatColor.GREEN + "(" + userStatistics.getUserGroup() + ")" + " " + p + " has connected to this server.");
+            event.setQuitMessage(ChatColor.GREEN + "(" + userStatistics.getUserGroup() + ")" + " " + p.getDisplayName() + " has disconnected from the server.");
         }
         catch (SQLException e)
         {
