@@ -1,7 +1,5 @@
 package me.cole.rankplugin.model;
 
-import javax.xml.crypto.Data;
-
 public class DatabaseStructure
 {
     private String userUUID;

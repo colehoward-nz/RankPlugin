@@ -56,11 +56,33 @@ public class Listeners implements Listener
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event)
     {
-        Player p = event.getPlayer();
+        Player player = event.getPlayer();
         try
         {
-            DatabaseStructure userStatistics = database.getUserStatistics(p);
+            DatabaseStructure userStatistics = database.getUserStatistics(player);
+            String prefix = "";
+            if (userStatistics.getUserGroup().equals("Owner"))
+            {
+                prefix = ChatColor.GRAY + "[" + ChatColor.RED + "Owner" + ChatColor.GRAY + "]" + ChatColor.RED + " ";
+            }
+            else if (userStatistics.getUserGroup().equals("Developer"))
+            {
+                prefix = ChatColor.GRAY + "[" + ChatColor.AQUA + "Developer" + ChatColor.GRAY + "]" + ChatColor.AQUA + " ";
+            }
+            else if (userStatistics.getUserGroup().equals("Admin"))
+            {
+                prefix = ChatColor.GRAY + "[" + ChatColor.GOLD + "Admin" + ChatColor.GRAY + "]" + ChatColor.GOLD + " ";
+            }
+            else if (userStatistics.getUserGroup().equals("Mod"))
+            {
+                prefix = ChatColor.GRAY + "[" + ChatColor.YELLOW + "Mod" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " ";
+            }
+            else if (userStatistics.getUserGroup().equals("User"))
+            {
+                prefix = ChatColor.GRAY + "";
+            }
 
+            event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
         }
         catch (SQLException e)
         {

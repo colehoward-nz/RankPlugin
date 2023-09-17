@@ -25,65 +25,78 @@ public class RankCommand implements CommandExecutor
     {
         if (sender instanceof Player player)
         {
-            if (arguments.length == 0 || arguments.length == 1)
+            if (player.hasPermission("rank.rank"))
             {
-                player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
-            }
-            else if (arguments.length == 2 || arguments.length == 3)
-            {
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(arguments[0]);
-                Player argumentUser = (Player) offlinePlayer;
-
-                if (arguments[1].equals("display"))
+                if (arguments.length == 0 || arguments.length == 1)
                 {
-                    try
-                    {
-                        DatabaseStructure userStatistics = database.getUserStatistics(argumentUser);
-                        player.sendMessage(ChatColor.YELLOW + "User Group stored for " + argumentUser.getDisplayName());
-                        player.sendMessage(ChatColor.GREEN + "userUUID = " + ChatColor.WHITE + userStatistics.getUserUUID());
-                        player.sendMessage(ChatColor.GREEN + "userGroup = " + ChatColor.WHITE + userStatistics.getUserGroup());
-                    }
-                    catch (SQLException exception)
-                    {
-                        exception.printStackTrace();
-                        System.out.println("Failed to retrieve UserStatistics during RankCommand.onCommand");
-                        player.sendMessage(ChatColor.RED + "Failed to retrieve UserStatistics");
-                    }
+                    player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
                 }
-                else if (arguments[1].equals("set"))
+                else if (arguments.length == 2 || arguments.length == 3)
                 {
-                    if (arguments.length == 3)
+                    Player argumentUser = Bukkit.getServer().getPlayerExact(arguments[0]);
+
+                    if (argumentUser != null)
                     {
-                        String oldGroup = "";
-                        String newGroup = "";
-
-                        try
+                        if (arguments[1].equals("display"))
                         {
-                            DatabaseStructure userStatistics = database.getUserStatistics(argumentUser);
-                            oldGroup = userStatistics.getUserGroup();
-                            userStatistics.setUserGroup(arguments[2]);
-                            newGroup = arguments[2];
-                            database.updateUserStatistics(userStatistics);
+                            try
+                            {
+                                DatabaseStructure userStatistics = database.getUserStatistics(argumentUser);
+                                player.sendMessage(ChatColor.YELLOW + "User Group stored for " + argumentUser.getDisplayName());
+                                player.sendMessage(ChatColor.GREEN + "userUUID = " + ChatColor.WHITE + userStatistics.getUserUUID());
+                                player.sendMessage(ChatColor.GREEN + "userGroup = " + ChatColor.WHITE + userStatistics.getUserGroup());
+                            }
+                            catch (SQLException exception)
+                            {
+                                exception.printStackTrace();
+                                System.out.println("Failed to retrieve UserStatistics during RankCommand.onCommand");
+                                player.sendMessage(ChatColor.RED + "Failed to retrieve UserStatistics");
+                            }
                         }
-                        catch (SQLException exception)
+                        else if (arguments[1].equals("set"))
                         {
-                            exception.printStackTrace();
-                            System.out.println("Failed to update UserStatistics during RankCommand.onCommand");
-                            player.sendMessage(ChatColor.RED + "Failed to retrieve UserStatistics");
-                        }
+                            if (arguments.length == 3)
+                            {
+                                String oldGroup = "";
+                                String newGroup = "";
 
-                        player.sendMessage(ChatColor.YELLOW + "User Group updated from " + oldGroup + " to " + newGroup + " for " + argumentUser.getDisplayName());
+                                try
+                                {
+                                    DatabaseStructure userStatistics = database.getUserStatistics(argumentUser);
+                                    oldGroup = userStatistics.getUserGroup();
+                                    userStatistics.setUserGroup(arguments[2]);
+                                    newGroup = arguments[2];
+                                    database.updateUserStatistics(userStatistics);
+                                }
+                                catch (SQLException exception)
+                                {
+                                    exception.printStackTrace();
+                                    System.out.println("Failed to update UserStatistics during RankCommand.onCommand");
+                                    player.sendMessage(ChatColor.RED + "Failed to retrieve UserStatistics");
+                                }
+
+                                player.sendMessage(ChatColor.YELLOW + "User Group updated from " + oldGroup + " to " + newGroup + " for " + argumentUser.getDisplayName());
+                            }
+                            else
+                            {
+                                player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
+                            }
+
+                        }
+                        else
+                        {
+                            player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
+                        }
                     }
                     else
                     {
-                        player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
+                        player.sendMessage(ChatColor.RED + "Cannot find online player.");
                     }
-
                 }
-            }
-            else
-            {
-                player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
+                else
+                {
+                    player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
+                }
             }
         }
         return true;
