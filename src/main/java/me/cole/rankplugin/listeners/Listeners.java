@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -23,7 +24,6 @@ public class Listeners implements Listener
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event)
     {
-
         Player p = event.getPlayer();
         try
         {
@@ -40,12 +40,27 @@ public class Listeners implements Listener
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event)
     {
-
         Player p = event.getPlayer();
         try
         {
             DatabaseStructure userStatistics = database.getUserStatistics(p);
             event.setQuitMessage(ChatColor.GREEN + "(" + userStatistics.getUserGroup() + ")" + " " + p + " has connected to this server.");
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not update player stats after quit.");
+        }
+    }
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event)
+    {
+        Player p = event.getPlayer();
+        try
+        {
+            DatabaseStructure userStatistics = database.getUserStatistics(p);
+
         }
         catch (SQLException e)
         {

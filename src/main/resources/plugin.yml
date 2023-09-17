@@ -5,7 +5,5 @@ api-version: '1.20'
 commands:
   rank:
     usage: /rank <user> <set|display> [group]
-    description: Update or display a user group from the SQL database.
-  perm:
-    usage: /perm <user> <set|display> [0-9]
-    description: Update or display a user permission level from the SQL database.
+    description: Update or display a users group
+

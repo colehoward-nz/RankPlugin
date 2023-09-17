@@ -1,6 +1,5 @@
 package me.cole.rankplugin;
 
-import me.cole.rankplugin.commands.PermCommand;
 import me.cole.rankplugin.commands.RankCommand;
 import me.cole.rankplugin.database.Database;
 import me.cole.rankplugin.listeners.Listeners;
@@ -28,7 +27,6 @@ public final class Rank extends JavaPlugin
 
         getServer().getPluginManager().registerEvents(new Listeners(database), this);
         getCommand("rank").setExecutor(new RankCommand(database));
-        getCommand("perm").setExecutor(new PermCommand(database));
     }
 
     public Database getDatabase()
