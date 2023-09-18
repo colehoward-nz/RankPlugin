@@ -31,6 +31,7 @@ public final class Rank extends JavaPlugin
 
     public Database getDatabase()
     {
+
         return this.database;
     }
 }

@@ -97,6 +97,10 @@ public class RankCommand implements CommandExecutor
                     player.sendMessage(ChatColor.RED + "Incorrect usage: /rank <user> <set|display> [group]");
                 }
             }
+            else
+            {
+                player.sendMessage(ChatColor.RED + "Insufficient permissions");
+            }
         }
         return true;
     }
