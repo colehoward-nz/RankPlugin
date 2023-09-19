@@ -21,7 +21,7 @@ public final class Rank extends JavaPlugin
         }
         catch (SQLException exception)
         {
-            System.out.println("Unable to connect to MySQL server.");
+            System.out.println("[Rank] Unable to connect to MySQL server.");
             exception.printStackTrace();
         }
 

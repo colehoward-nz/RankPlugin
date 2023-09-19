@@ -7,3 +7,4 @@ commands:
     usage: /rank <user> <set|display> [group]
     description: Update or display a users group
 
+

@@ -63,26 +63,31 @@ public class Listeners implements Listener
             String prefix = "";
             if (userStatistics.getUserGroup().equals("Owner"))
             {
-                prefix = ChatColor.GRAY + "[" + ChatColor.RED + "Owner" + ChatColor.GRAY + "]" + ChatColor.RED + " ";
+                prefix = ChatColor.WHITE + "[" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "SpicyOwner" + ChatColor.WHITE + "]" + ChatColor.DARK_PURPLE + " ";
+                event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.DARK_PURPLE + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equals("Developer"))
             {
-                prefix = ChatColor.GRAY + "[" + ChatColor.AQUA + "Developer" + ChatColor.GRAY + "]" + ChatColor.AQUA + " ";
+                prefix = ChatColor.WHITE + "[" + ChatColor.DARK_AQUA + ChatColor.BOLD + "Dev" + ChatColor.WHITE + "]" + ChatColor.AQUA + " ";
+                event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.AQUA + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equals("Admin"))
             {
-                prefix = ChatColor.GRAY + "[" + ChatColor.GOLD + "Admin" + ChatColor.GRAY + "]" + ChatColor.GOLD + " ";
+                prefix = ChatColor.WHITE + "[" + ChatColor.RED + ChatColor.BOLD + "Admin" + ChatColor.WHITE + "]" + ChatColor.RED + " ";
+                event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equals("Mod"))
             {
-                prefix = ChatColor.GRAY + "[" + ChatColor.YELLOW + "Mod" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " ";
+                prefix = ChatColor.WHITE + "[" + ChatColor.DARK_GREEN + ChatColor.BOLD + "Mod" + ChatColor.WHITE + "]" + ChatColor.DARK_GREEN + " ";
+                event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equals("User"))
             {
                 prefix = ChatColor.GRAY + "";
+                event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + event.getMessage());
             }
 
-            event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
+
         }
         catch (SQLException e)
         {

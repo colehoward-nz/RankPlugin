@@ -32,7 +32,7 @@ public class Database
         String sql = "CREATE TABLE IF NOT EXISTS player_statistics(userUUID varchar(200) primary key, userGroup varchar(200), perm int)";
         statement.execute(sql);
 
-        System.out.println("MySQL server connection and initialisation completed successfully.");
+        System.out.println("[Rank] MySQL server connection and initialisation completed successfully.");
         statement.close();
     }
 
