@@ -68,7 +68,7 @@ public class Listeners implements Listener
             }
             else if (userStatistics.getUserGroup().equalsIgnoreCase("developer"))
             {
-                prefix = ChatColor.WHITE + "[" + ChatColor.DARK_AQUA + ChatColor.BOLD + "Dev" + ChatColor.WHITE + "]" + ChatColor.AQUA + " ";
+                prefix = ChatColor.WHITE + "[" + ChatColor.AQUA + ChatColor.BOLD + "Dev" + ChatColor.WHITE + "]" + ChatColor.AQUA + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.AQUA + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equalsIgnoreCase("admin"))
