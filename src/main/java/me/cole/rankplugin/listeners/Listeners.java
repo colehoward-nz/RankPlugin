@@ -61,27 +61,27 @@ public class Listeners implements Listener
         {
             DatabaseStructure userStatistics = database.getUserStatistics(player);
             String prefix = "";
-            if (userStatistics.getUserGroup().equals("Owner"))
+            if (userStatistics.getUserGroup().equalsIgnoreCase("owner"))
             {
                 prefix = ChatColor.WHITE + "[" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "SpicyOwner" + ChatColor.WHITE + "]" + ChatColor.DARK_PURPLE + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.DARK_PURPLE + event.getMessage());
             }
-            else if (userStatistics.getUserGroup().equals("Developer"))
+            else if (userStatistics.getUserGroup().equalsIgnoreCase("developer"))
             {
                 prefix = ChatColor.WHITE + "[" + ChatColor.DARK_AQUA + ChatColor.BOLD + "Dev" + ChatColor.WHITE + "]" + ChatColor.AQUA + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.AQUA + event.getMessage());
             }
-            else if (userStatistics.getUserGroup().equals("Admin"))
+            else if (userStatistics.getUserGroup().equalsIgnoreCase("admin"))
             {
                 prefix = ChatColor.WHITE + "[" + ChatColor.RED + ChatColor.BOLD + "Admin" + ChatColor.WHITE + "]" + ChatColor.RED + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
             }
-            else if (userStatistics.getUserGroup().equals("Mod"))
+            else if (userStatistics.getUserGroup().equalsIgnoreCase("mod"))
             {
                 prefix = ChatColor.WHITE + "[" + ChatColor.DARK_GREEN + ChatColor.BOLD + "Mod" + ChatColor.WHITE + "]" + ChatColor.DARK_GREEN + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
             }
-            else if (userStatistics.getUserGroup().equals("User"))
+            else if (userStatistics.getUserGroup().equalsIgnoreCase("user"))
             {
                 prefix = ChatColor.GRAY + "";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + event.getMessage());
