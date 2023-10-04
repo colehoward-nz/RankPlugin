@@ -28,7 +28,8 @@ public class Listeners implements Listener
         try
         {
             DatabaseStructure userStatistics = database.getUserStatistics(p);
-            event.setJoinMessage(ChatColor.GREEN + "(" + userStatistics.getUserGroup() + ")" + " " + p.getDisplayName() + " has connected to this server.");
+            String str = userStatistics.getUserGroup();
+            event.setJoinMessage(ChatColor.GREEN + "(" + str.substring(0, 1).toUpperCase() + str.substring(1)  + ")" + " " + p.getDisplayName() + " has connected to this server.");
         }
         catch (SQLException e)
         {
@@ -44,7 +45,8 @@ public class Listeners implements Listener
         try
         {
             DatabaseStructure userStatistics = database.getUserStatistics(p);
-            event.setQuitMessage(ChatColor.GREEN + "(" + userStatistics.getUserGroup() + ")" + " " + p.getDisplayName() + " has disconnected from the server.");
+            String str = userStatistics.getUserGroup();
+            event.setQuitMessage(ChatColor.GREEN + "(" + str.substring(0, 1).toUpperCase() + str.substring(1) + ")" + " " + p.getDisplayName() + " has disconnected from the server.");
         }
         catch (SQLException e)
         {
@@ -63,22 +65,22 @@ public class Listeners implements Listener
             String prefix = "";
             if (userStatistics.getUserGroup().equalsIgnoreCase("owner"))
             {
-                prefix = ChatColor.WHITE + "[" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "SpicyOwner" + ChatColor.WHITE + "]" + ChatColor.DARK_PURPLE + " ";
+                prefix = ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "SpicyOwner" + ChatColor.GRAY + "]" + ChatColor.DARK_PURPLE + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.DARK_PURPLE + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equalsIgnoreCase("developer"))
             {
-                prefix = ChatColor.WHITE + "[" + ChatColor.AQUA + ChatColor.BOLD + "Dev" + ChatColor.WHITE + "]" + ChatColor.AQUA + " ";
+                prefix = ChatColor.GRAY + "[" + ChatColor.AQUA + ChatColor.BOLD + "Dev" + ChatColor.GRAY + "]" + ChatColor.AQUA + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.AQUA + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equalsIgnoreCase("admin"))
             {
-                prefix = ChatColor.WHITE + "[" + ChatColor.RED + ChatColor.BOLD + "Admin" + ChatColor.WHITE + "]" + ChatColor.RED + " ";
+                prefix = ChatColor.GRAY + "[" + ChatColor.RED + ChatColor.BOLD + "Admin" + ChatColor.GRAY + "]" + ChatColor.RED + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equalsIgnoreCase("mod"))
             {
-                prefix = ChatColor.WHITE + "[" + ChatColor.DARK_GREEN + ChatColor.BOLD + "Mod" + ChatColor.WHITE + "]" + ChatColor.DARK_GREEN + " ";
+                prefix = ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + ChatColor.BOLD + "Mod" + ChatColor.GRAY + "]" + ChatColor.DARK_GREEN + " ";
                 event.setFormat(prefix + player.getDisplayName() + ChatColor.GRAY + ": " + ChatColor.WHITE + event.getMessage());
             }
             else if (userStatistics.getUserGroup().equalsIgnoreCase("user"))

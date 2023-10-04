@@ -4,13 +4,23 @@ public class DatabaseStructure
 {
     private String userUUID;
     private String userGroup;
-    private int perm;
+    private int kills;
+    private int deaths;
+    private int level;
+    private int exp;
+    private int bal;
 
-    public DatabaseStructure(String userUUID, String userGroup, int perm)
+
+    public DatabaseStructure(String userUUID, String userGroup, int kills, int deaths, int level, int exp, int bal)
     {
         this.userUUID = userUUID;
         this.userGroup = userGroup;
-        this.perm = perm;
+        this.kills = kills;
+        this.deaths = deaths;
+        this.level = level;
+        this.exp = exp;
+        this.bal = bal;
+
     }
 
     public String getUserUUID()
@@ -31,13 +41,49 @@ public class DatabaseStructure
         this.userGroup = userGroup;
     }
 
-    public int getPerm()
+    public int getKills()
     {
-        return this.perm;
+        return this.kills;
     }
-    public void setPerm(int perm)
+    public void setKills(int kills)
     {
-        this.perm = perm;
+        this.kills = kills;
+    }
+
+    public int getDeaths()
+    {
+        return this.deaths;
+    }
+    public void setDeaths(int deaths)
+    {
+        this.deaths = deaths;
+    }
+
+    public int getLevel()
+    {
+        return this.level;
+    }
+    public void setLevel(int level)
+    {
+        this.level = level;
+    }
+
+    public int getExp()
+    {
+        return this.exp;
+    }
+    public void setExp(int exp)
+    {
+        this.exp = exp;
+    }
+
+    public int getBal()
+    {
+        return this.bal;
+    }
+    public void setBal(int bal)
+    {
+        this.bal = bal;
     }
 
 }

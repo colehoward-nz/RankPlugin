@@ -16,7 +16,7 @@ public class Database
             return connection;
         }
 
-        String url = "jdbc:mysql://localhost/rank_plugin";
+        String url = "jdbc:mysql://localhost/kitpvp";
         String username = "root";
         String password = "";
 
@@ -29,7 +29,7 @@ public class Database
     public void initialiseDatabase() throws SQLException
     {
         Statement statement = getConnection().createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS player_statistics(userUUID varchar(200) primary key, userGroup varchar(200), perm int)";
+        String sql = "CREATE TABLE IF NOT EXISTS player_statistics(userUUID varchar(200) primary key, userGroup varchar(200), kills int, deaths int, level int, exp int, bal int)";
         statement.execute(sql);
 
         System.out.println("[Rank] MySQL server connection and initialisation completed successfully.");
@@ -42,7 +42,7 @@ public class Database
 
         if (userStatistics == null)
         {
-            userStatistics = new DatabaseStructure(player.getUniqueId().toString(), "User", 0);
+            userStatistics = new DatabaseStructure(player.getUniqueId().toString(), "User", 0, 0, 0, 0, 100);
             createUserStatistics(userStatistics);
         }
 
@@ -58,7 +58,9 @@ public class Database
 
         if (resultSet.next())
         {
-            databaseStructure = new DatabaseStructure(resultSet.getString("userUUID"), resultSet.getString("userGroup"), resultSet.getInt("perm"));
+            databaseStructure = new DatabaseStructure(resultSet.getString("userUUID"),
+                    resultSet.getString("userGroup"), resultSet.getInt("kills"), resultSet.getInt("deaths"),
+                    resultSet.getInt("level"), resultSet.getInt("exp"), resultSet.getInt("bal"));
             preparedStatement.close();
 
             return databaseStructure;
@@ -71,10 +73,14 @@ public class Database
     public void createUserStatistics(DatabaseStructure databaseStructure) throws SQLException
     {
 
-        PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO player_statistics(userUUID, userGroup, perm) VALUES (?, ?, ?)");
+        PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO player_statistics(userUUID, userGroup, kills, deaths, level, exp, bal) VALUES (?, ?, ?, ?, ?, ?, ?)");
         preparedStatement.setString(1, databaseStructure.getUserUUID());
         preparedStatement.setString(2, databaseStructure.getUserGroup());
-        preparedStatement.setInt(3, databaseStructure.getPerm());
+        preparedStatement.setInt(3, databaseStructure.getKills());
+        preparedStatement.setInt(4, databaseStructure.getDeaths());
+        preparedStatement.setInt(5, databaseStructure.getLevel());
+        preparedStatement.setInt(6, databaseStructure.getExp());
+        preparedStatement.setInt(7, databaseStructure.getBal());
 
         preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -84,10 +90,15 @@ public class Database
     public void updateUserStatistics(DatabaseStructure databaseStructure) throws SQLException
     {
 
-        PreparedStatement preparedStatement = getConnection().prepareStatement("UPDATE player_statistics SET userUUID = ?, userGroup = ? WHERE perm = ?");
+        PreparedStatement preparedStatement = getConnection().prepareStatement("UPDATE player_statistics SET userUUID = ?, userGroup = ?, kills = ?, deaths = ?, " +
+                "level = ?, exp = ?, bal = ?");
         preparedStatement.setString(1, databaseStructure.getUserUUID());
         preparedStatement.setString(2, databaseStructure.getUserGroup());
-        preparedStatement.setInt(3, databaseStructure.getPerm());
+        preparedStatement.setInt(3, databaseStructure.getKills());
+        preparedStatement.setInt(4, databaseStructure.getDeaths());
+        preparedStatement.setInt(5, databaseStructure.getLevel());
+        preparedStatement.setInt(6, databaseStructure.getExp());
+        preparedStatement.setInt(7, databaseStructure.getBal());
 
         preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -96,7 +107,6 @@ public class Database
 
     public void deleteUserStatistics(DatabaseStructure databaseStructure) throws SQLException
     {
-
         PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM player_statistics WHERE userUUID = ?");
         preparedStatement.setString(1, databaseStructure.getUserUUID());
 
